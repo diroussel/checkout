@@ -30,6 +30,11 @@ export interface IGitSourceSettings {
   clean: boolean
 
   /**
+   * Arguments to pass to the git clean command
+   */
+  cleanFlags: boolean
+
+  /**
    * The filter determining which objects to include
    */
   filter: string | undefined

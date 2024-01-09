@@ -82,6 +82,10 @@ export async function getInputs(): Promise<IGitSourceSettings> {
   result.clean = (core.getInput('clean') || 'true').toUpperCase() === 'TRUE'
   core.debug(`clean = ${result.clean}`)
 
+  // Clean Flags
+  result.cleanFlags = core.getInput('git-clean-flags')
+  core.debug(`cleanFlags = ${result.cleanFlags}`)
+
   // Filter
   const filter = core.getInput('filter')
   if (filter) {
