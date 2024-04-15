@@ -77,6 +77,7 @@ Please refer to the [release page](https://github.com/actions/checkout/releases/
     # GIT_CLEAN_FLAGS env var. Could be set to "-ffdx -e node_modules -e .turbo" to
     # allo the `node_modules` and `.turbo` directories to be preserved during git
     # clean.
+    # Default: ${{ env.GIT_CLEAN_FLAGS || '-ffdx' }}
     git-clean-flags: ''
 
     # Partially clone against a given filter. Overrides sparse-checkout if set.
