@@ -9,6 +9,7 @@ const testWorkspace = path.join(__dirname, '_temp', 'git-directory-helper')
 let repositoryPath: string
 let repositoryUrl: string
 let clean: boolean
+let cleanFlags: string
 let ref: string
 let git: IGitCommandManager
 
@@ -35,7 +36,6 @@ describe('git-directory-helper tests', () => {
   it(cleansWhenCleanTrue, async () => {
     // Arrange
     await setup(cleansWhenCleanTrue)
-    await fs.promises.writeFile(path.join(repositoryPath, 'my-file'), '')
 
     // Act
     await gitDirectoryHelper.prepareExistingDirectory(
@@ -43,13 +43,34 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
     // Assert
-    const files = await fs.promises.readdir(repositoryPath)
-    expect(files.sort()).toEqual(['.git', 'my-file'])
-    expect(git.tryClean).toHaveBeenCalled()
+    expect(git.tryClean).toHaveBeenCalledWith('-ffdx')
+    expect(git.tryReset).toHaveBeenCalled()
+    expect(core.warning).not.toHaveBeenCalled()
+  })
+
+  const cleansWithCleanFlags = 'cleans with clean flags'
+  it(cleansWhenCleanTrue, async () => {
+    // Arrange
+    await setup(cleansWhenCleanTrue)
+    cleanFlags = '-ffdx -e node_modules'
+
+    // Act
+    await gitDirectoryHelper.prepareExistingDirectory(
+      git,
+      repositoryPath,
+      repositoryUrl,
+      clean,
+      cleanFlags,
+      ref
+    )
+
+    // Assert
+    expect(git.tryClean).toHaveBeenCalledWith('-ffdx -e node_modules')
     expect(git.tryReset).toHaveBeenCalled()
     expect(core.warning).not.toHaveBeenCalled()
   })
@@ -66,6 +87,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -92,6 +114,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -114,6 +137,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -143,6 +167,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -170,6 +195,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       differentRepositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -195,6 +221,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -221,6 +248,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -246,6 +274,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -271,6 +300,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -302,6 +332,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -330,6 +361,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -361,6 +393,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -393,6 +426,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -425,6 +459,7 @@ describe('git-directory-helper tests', () => {
       repositoryPath,
       repositoryUrl,
       clean,
+      cleanFlags,
       ref
     )
 
@@ -451,6 +486,7 @@ async function setup(testName: string): Promise<void> {
 
   // Clean
   clean = true
+  cleanFlags = '-ffdx'
 
   // Ref
   ref = ''
