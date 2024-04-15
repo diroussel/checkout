@@ -32,7 +32,7 @@ export interface IGitSourceSettings {
   /**
    * Arguments to pass to the git clean command
    */
-  cleanFlags: string
+  cleanExclusions: string[]
 
   /**
    * The filter determining which objects to include

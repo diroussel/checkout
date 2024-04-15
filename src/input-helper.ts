@@ -4,6 +4,7 @@ import * as github from '@actions/github'
 import * as path from 'path'
 import * as workflowContextHelper from './workflow-context-helper'
 import {IGitSourceSettings} from './git-source-settings'
+import {getMultilineInput} from '@actions/core'
 
 export async function getInputs(): Promise<IGitSourceSettings> {
   const result = ({} as unknown) as IGitSourceSettings
@@ -83,8 +84,8 @@ export async function getInputs(): Promise<IGitSourceSettings> {
   core.debug(`clean = ${result.clean}`)
 
   // Clean Flags
-  result.cleanFlags = core.getInput('git-clean-flags')
-  core.debug(`cleanFlags = ${result.cleanFlags}`)
+  result.cleanExclusions = core.getMultilineInput('clean-exclusions')
+  core.debug(`cleanExclusions = ${result.cleanExclusions}`)
 
   // Filter
   const filter = core.getInput('filter')

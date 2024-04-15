@@ -73,12 +73,12 @@ Please refer to the [release page](https://github.com/actions/checkout/releases/
     # Default: true
     clean: ''
 
-    # Arguments to pass to the git clean command, can also be set by the
-    # GIT_CLEAN_FLAGS env var. Could be set to "-ffdx -e node_modules -e .turbo" to
-    # allo the `node_modules` and `.turbo` directories to be preserved during git
+    # Array of directories pass as exclusions to the git clean command, can also be
+    # set by the GIT_CLEAN_FLAGS env var. Could be set to ["node_modules", ".turbo"]
+    # to allow the `node_modules` and `.turbo` directories to be preserved during git
     # clean.
-    # Default: -ffdx
-    git-clean-flags: ''
+    # Default: 
+    clean-exclusions: ''
 
     # Partially clone against a given filter. Overrides sparse-checkout if set.
     # Default: null
