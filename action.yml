@@ -55,7 +55,7 @@ inputs:
     default: true
   clean-exclusions:
     description: >
-      Array of directories pass as exclusions to the git clean command, can also be set by the GIT_CLEAN_FLAGS env var.
+      Newline-separated list of of directories pass as exclusions to the git clean command, can also be set by the GIT_CLEAN_FLAGS env var.
       Could be set to ["node_modules", ".turbo"] to allow the `node_modules` and `.turbo` directories
       to be preserved during git clean.
     default: ''
